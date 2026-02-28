@@ -27,15 +27,10 @@ outputs:
     description: Top competitor name and stars
     value: ${{ steps.check.outputs.top-competitor }}
 runs:
-  using: composite
-  steps:
-    - run: pip install idea-reality-mcp httpx
-      shell: bash
-    - id: check
-      run: python ${{ github.action_path }}/entrypoint.py
-      shell: bash
-      env:
-        INPUT_IDEA: ${{ inputs.idea }}
-        INPUT_DEPTH: ${{ inputs.depth }}
-        INPUT_GITHUB_TOKEN: ${{ inputs.github-token }}
-        INPUT_THRESHOLD: ${{ inputs.threshold }}
+  using: docker
+  image: Dockerfile
+  env:
+    INPUT_IDEA: ${{ inputs.idea }}
+    INPUT_DEPTH: ${{ inputs.depth }}
+    INPUT_GITHUB_TOKEN: ${{ inputs.github-token }}
+    INPUT_THRESHOLD: ${{ inputs.threshold }}
