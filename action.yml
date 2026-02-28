@@ -1,0 +1,41 @@
+name: Idea Reality Check
+description: Pre-build reality check — scans GitHub, HN, npm, PyPI & Product Hunt
+branding:
+  icon: search
+  color: blue
+inputs:
+  idea:
+    description: Idea description or path to a proposal file
+    required: true
+  depth:
+    description: "quick (GitHub+HN) or deep (all 5 sources)"
+    default: "quick"
+  github-token:
+    description: GitHub token for API access
+    default: ${{ github.token }}
+  threshold:
+    description: Reality signal threshold for warning
+    default: "70"
+outputs:
+  score:
+    description: Reality signal (0-100)
+    value: ${{ steps.check.outputs.score }}
+  report:
+    description: Full JSON report
+    value: ${{ steps.check.outputs.report }}
+  top-competitor:
+    description: Top competitor name and stars
+    value: ${{ steps.check.outputs.top-competitor }}
+runs:
+  using: composite
+  steps:
+    - run: pip install idea-reality-mcp httpx
+      shell: bash
+    - id: check
+      run: python ${{ github.action_path }}/entrypoint.py
+      shell: bash
+      env:
+        INPUT_IDEA: ${{ inputs.idea }}
+        INPUT_DEPTH: ${{ inputs.depth }}
+        INPUT_GITHUB_TOKEN: ${{ inputs.github-token }}
+        INPUT_THRESHOLD: ${{ inputs.threshold }}

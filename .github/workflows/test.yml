@@ -1,0 +1,20 @@
+name: Test Action
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        id: check
+        with:
+          idea: "CLI tool for DNS propagation monitoring"
+          depth: quick
+          threshold: "70"
+      - run: |
+          echo "Score: ${{ steps.check.outputs.score }}"
+          echo "Top: ${{ steps.check.outputs.top-competitor }}"
