@@ -150,6 +150,17 @@ The action never breaks your CI pipeline. If the reality check fails (network is
 3. Computes a weighted reality signal based on existing solutions
 4. Returns the score, top competitors, and pivot suggestions
 
+## FAQ
+
+**Does this fail my CI pipeline?**
+No. The action uses `::warning::` annotations instead of failing the build. If the reality check encounters an error, it outputs score=0 and continues gracefully. Your pipeline will never break because of this action.
+
+**What's the difference between quick and deep mode?**
+Quick mode (default) scans GitHub repositories and Hacker News — fast, no API keys needed. Deep mode scans all 5 sources (GitHub, HN, npm, PyPI, Product Hunt) for a more comprehensive check.
+
+**Do I need API keys?**
+No. The action works without any API keys using the default `github.token`. For deep mode with Product Hunt, you can optionally provide a `PRODUCTHUNT_TOKEN`. A personal `GITHUB_TOKEN` raises the API rate limit but is not required.
+
 ## Links
 
 - [idea-reality-mcp](https://github.com/mnemox-ai/idea-reality-mcp) — the core engine (MCP server + Python package)

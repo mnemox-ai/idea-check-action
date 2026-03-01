@@ -1,0 +1,21 @@
+# idea-check-action
+
+> GitHub Action that runs a pre-build reality check on every PR or push. Scans GitHub, HN, npm, PyPI, Product Hunt and returns a 0-100 signal.
+
+idea-check-action is a GitHub Action wrapper for idea-reality-mcp. Add it to your CI/CD pipeline to automatically validate project ideas before building.
+
+Usage: Add to any GitHub Actions workflow with `uses: mnemox-ai/idea-check-action@v1`.
+
+Inputs: idea (required), depth (quick/deep), github-token, threshold (default 70).
+Outputs: score (0-100), report (JSON), top-competitor (name + stars).
+
+Key behavior: Never fails your CI pipeline. Uses `::warning::` annotations instead of exit codes on errors.
+
+## Documentation
+
+- [README](https://github.com/mnemox-ai/idea-check-action#readme): Quick start, inputs/outputs tables, advanced usage examples.
+- [idea-reality-mcp](https://github.com/mnemox-ai/idea-reality-mcp): The underlying MCP tool that powers this action.
+
+## Optional
+
+- [PyPI: idea-reality-mcp](https://pypi.org/project/idea-reality-mcp/): The Python package installed by this action.
